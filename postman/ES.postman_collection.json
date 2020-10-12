@@ -1,0 +1,522 @@
+{
+	"info": {
+		"_postman_id": "c23e54cb-15f2-4c16-9fef-49c0792bb4d8",
+		"name": "ES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1-连接测试",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.0.82:9200",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-新增文档，自动创建索引",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"kimchy\",\r\n    \"post_date\": \"2009-11-15T13:12:00\",\r\n    \"message\": \"Trying out Elasticsearch, so far so good?\"\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_doc/1?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_doc",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				},
+				"description": "索引不存在，默认自动创建索引"
+			},
+			"response": []
+		},
+		{
+			"name": "2-新增文档2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"user\": \"kimchy\",\r\n    \"post_date\": \"2009-11-15T14:12:12\",\r\n    \"message\": \"Another tweet, will it be indexed?\"\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_doc/3?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_doc",
+						"3"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2-新增文档3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"user\": \"elastic\",\r\n    \"post_date\": \"2010-01-15T01:46:38\",\r\n    \"message\": \"Building the site, should be kewl\"\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_doc/3?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_doc",
+						"3"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3-查询文档1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_doc/1?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_doc",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4-搜索文档-1-搜索关键词",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\" : {\r\n        \"match\" : { \"user\": \"kimchy\" }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_search?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				},
+				"description": "搜索关键词{ \"user\": \"kimchy\" }"
+			},
+			"response": []
+		},
+		{
+			"name": "4-搜索文档-2-某索引库全部",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\" : {\r\n        \"match_all\" : {}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_search?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				},
+				"description": "搜索所有文档"
+			},
+			"response": []
+		},
+		{
+			"name": "4-搜索文档-2-范围搜索",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"query\" : {\r\n        \"range\" : {\r\n            \"post_date\" : { \"from\" : \"2009-11-15T13:00:00\", \"to\" : \"2009-11-15T14:00:00\" }\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/twitter/_search?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"twitter",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				},
+				"description": "范围搜索，按时间区间"
+			},
+			"response": []
+		},
+		{
+			"name": "5-新增文档，按数据建索引",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"kimchy\",\r\n    \"post_date\": \"2009-11-15T13:12:00\",\r\n    \"message\": \"Trying out Elasticsearch, so far so good?\"\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/kimchy/_doc/1?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"kimchy",
+						"_doc",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5-新增文档2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"kimchy\",\r\n    \"post_date\": \"2009-11-15T14:12:12\",\r\n    \"message\": \"Another tweet, will it be indexed?\"\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/kimchy/_doc/2?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"kimchy",
+						"_doc",
+						"2"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6-配置分片，可以直接在yaml里设置",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"settings\" : {\r\n        \"index.number_of_shards\" : 2,\r\n        \"index.number_of_replicas\" : 1\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/another_user?pretty",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"another_user"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7-搜索文档-多索引搜索",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"query\" : {\r\n        \"match_all\" : {}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/kimchy,another_user/_search?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"kimchy,another_user",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7-搜索文档-2-全部索引",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"match_all\": {}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://192.168.0.82:9200/_search?pretty=true",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"82"
+					],
+					"port": "9200",
+					"path": [
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
